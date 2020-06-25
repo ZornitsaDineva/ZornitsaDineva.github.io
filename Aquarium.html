@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="bg-BG">
+<head>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	 <style>
+	body  {  
+		background-image: url("https://www.azocleantech.com/images/news/ImageForNews_26805_15752980188385490.jpg");
+		background-size: cover;
+	}
+	 img{width:50px; height:50px;}
+	 div{position:absolute;}
+	 
+	 </style>
+	 <script>
+	 $(document).ready(function(){
+	    let fishNum=3+Math.trunc(Math.random()*4);
+		for( var i=1; i<=fishNum;i++){
+			let fish = $('<div id="fish' + i + '"><img src="https://cdn.iconscout.com/icon/premium/png-256-thumb/fish-1577324-1334925.png"  ></div>');
+			$('body').append(fish);
+			swim("fish" + i);
+		}
+	
+		$(document).click(function(e) {
+			let fishes = $('[id^=fish]');
+			fishes.stop().each(function() {
+				swimTo($(this).attr('id'), e.pageX, e.pageY);
+			});
+		});	
+	 });
+	 function swim(elid){
+		 let newLeft = Math.random()*($(document).width()-50);
+		 let newTop = Math.random()*($(document).height()-50);
+		 $("#"+elid).css({"transform": "rotateY(0deg)"});
+		 let newLeftPos = newLeft+"px";
+		 let newTopPos = newTop+"px";
+		 if(parseInt($("#"+elid).css("left"))>newLeft){
+		 $("#"+elid).css({"transform": "rotateY(180deg)"});
+		 }
+		 let timeToMove=Math.random()*1000;
+		 $("#"+elid).animate({left:newLeftPos,top:newTopPos},1000+timeToMove, function(){swim(elid)})
+	 }
+	 
+	 function swimTo(elid, X, Y){
+		 let newLeft = (X-50);
+		 let newTop = (Y-50);
+		 $("#"+elid).css({"transform": "rotateY(0deg)"});
+		 let newLeftPos = newLeft+"px";
+		 let newTopPos = newTop+"px";
+		 if(parseInt($("#"+elid).css("left"))>newLeft){	$("#"+elid).css({"transform": "rotateY(180deg)"});}
+		 $("#"+elid).animate({left:newLeftPos,top:newTopPos},1000, function(){	setTimeout(function() {	swim(elid);}, 500);	})
+		 ;}
+	 
+	 </script>
+</head> 
+ <body 
+
+ onresize=" var fishes = $('[id^=fish]');
+ fishes.stop().each(function(){
+	var elid = $(this).attr('id'); 
+	setTimeout(function() {	swim(elid);}, 2000);
+ })">
+
+</body>
+</html>
