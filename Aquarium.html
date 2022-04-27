@@ -5,7 +5,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 	<style>
 		body {
-			background-image: url("./images/Screenshot_Aquarium.jpg");
+			background-image: url("./assets/images/Screenshot_Aquarium.jpg");
 			background-size: cover;
 		}
 
@@ -22,7 +22,7 @@
 		$(document).ready(function () {
 			let fishNum = 3 + Math.trunc(Math.random() * 4);
 			for (var i = 1; i <= fishNum; i++) {
-				let fish = $('<div id="fish' + i + '"><img src="./images/fish50.png"  ></div>');
+				let fish = $('<div id="fish' + i + '"><img src="./assets/images/fish50.png"  ></div>');
 				$('body').append(fish);
 				swim("fish" + i);
 			}
