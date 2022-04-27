@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://unpkg.com/react@16/umd/react.production.min.js"></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/babel-standalone@6.15.0/babel.min.js"></script>
+
+    <style >
+      
+        body  {  
+        background-image: url("./assets/images/Texas-Longhorn-Cow-Facts.jpg");
+        background-size: cover;
+        text-align: center;
+        }
+              
+    </style>
+</head>
+
+<body>
+    <div id="mydiv" >
+    </div>
+    <script type="text/babel">
+         
+        function hasDuplicatedDigit(num) {
+            for (let i = 0; i < num.length; i++) {
+                const element1 = num[i];
+                for (let j = i + 1; j < num.length; j++) {
+                    const element2 = num[j];
+                    if (element1 == element2) return true;
+                }
+            }
+
+            return false;
+        }
+
+        function getRandom() {
+            var min = 1234;
+            var max = 9877;
+            var myNum = min + (Math.random() * (max - min));
+            myNum = myNum.toFixed();
+            var myNumber = Array.from(myNum);
+            console.log(myNumber);
+            return myNumber;
+        }
+
+        var myNumber = getRandom();
+        while (hasDuplicatedDigit(myNumber)) {
+            myNumber = getRandom();
+        }      
+            
+        
+        class Number extends React.Component {
+            cows = 0;
+            bulls = 0;
+            answer = '';
+
+            count = (e) => {
+                e.preventDefault();
+                this.cows = 0, this.bulls = 0;
+                this.answer = '';
+                var yourNumber = Array.from(this.state.yourNumber);
+
+                if(hasDuplicatedDigit(yourNumber)){
+                   this.answer = (<h1>You don't have to put duplicated digits!</h1>);
+                                   
+                }else if (yourNumber.length != myNumber.length) {
+                    this.answer = (<h2>You have to put four-digit number, don't duplicate digits!</h2>);
+                   
+                }else if(yourNumber.join() == myNumber.join()){
+                    this.answer = (<h1>You guess!</h1>);
+                }
+
+                for (var i = 0; i < myNumber.length; i++) {
+                    if (myNumber[i] == yourNumber[i]) {
+                        this.bulls = this.bulls + 1;
+                    } else if (myNumber.includes(yourNumber[i])) {
+                        this.cows = this.cows + 1;
+                    }
+                }
+                
+                this.forceUpdate();
+            }
+                       
+            constructor(props) {
+                super(props)
+                this.state = {
+                    yourNumber: ''
+                };
+            }
+
+            render() {
+                return (
+                    <form>
+                        <h1>Guess the four-digit number!</h1>
+                        <label>Input four-digit suggestion number, don't duplicate digits:</label>
+                        <input value={this.state.yourNumber} onChange={evt => this.updateYourNumber(evt)} />
+                        <br></br>
+                        <br></br>
+                        <button id="btn" onClick={this.count}>Submit</button>
+                        <h3>Answer: {this.cows} cows and {this.bulls} bulls</h3>
+                        {this.answer}
+                    </form>
+                );
+            }
+
+            updateYourNumber(evt) {
+                this.setState({
+                    yourNumber: evt.target.value
+                });
+            }
+        };
+
+        ReactDOM.render(
+            <Number />,
+            document.getElementById('mydiv')
+        );
+    </script>
+</body>
+</html>
+
+    
